@@ -1,479 +1,357 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Configuratore - Primarent</title>
-  <!-- Usa lo style.css principale del sito per mantenere coerenza -->
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    /* Piccole regole locali per il configuratore (non dovrebbero sovrascrivere il tuo style.css) */
-    .container-config {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 20px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 6px 30px rgba(0,0,0,0.08);
-      color: #1C1C1C;
-    }
-    .steps {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .step-pill {
-      padding: 8px 14px;
-      border-radius: 20px;
-      background: #f0f0f0;
-      font-weight: 600;
-    }
-    .step-pill.active {
-      background: var(--accent);
-      color: white;
-    }
-    .cars-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 18px;
-      margin-top: 16px;
-    }
-    .car-card {
-      border-radius: 10px;
-      overflow: hidden;
-      background: #fafafa;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.06);
-      display: flex;
-      flex-direction: column;
-    }
-    .car-card img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-    }
-    .car-card .card-body {
-      padding: 14px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .car-card h3 { margin: 0; font-size: 18px; }
-    .car-card p { margin: 0; color: #555; font-size: 14px; }
-    .price-badge {
-      margin-top: auto;
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--accent);
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Configuratore - Primarent</title>
 
-    /* Option boxes */
-    .options-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
-      gap: 16px;
-      margin-top: 12px;
-    }
-    .option {
-      background: #fff;
-      padding: 12px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-    }
-    .summary {
-      margin-top: 18px;
-      padding: 14px;
-      border-radius: 10px;
-      background: #f7f7f7;
-      font-size: 18px;
-      display: flex;
-      gap: 14px;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .summary .left { max-width: 70%; }
-    .big-price { font-size: 28px; font-weight: 900; color: var(--accent); }
+<link rel="stylesheet" href="style.css" />
 
-    /* Mobile tweaks */
-    @media (max-width: 700px) {
-      .container-config { margin: 20px; padding: 12px; }
-      .car-card img { height: 140px; }
-      .summary { flex-direction: column; align-items: flex-start; gap: 8px; }
-      .summary .left { max-width: 100%; }
-    }
-  </style>
+<style>
+/* --- STILI LOCALI --- */
+.container-config {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.08);
+  color: #1C1C1C;
+}
+.steps { display: flex; gap: 12px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+.step-pill { padding: 8px 14px; border-radius: 20px; background: #f0f0f0; font-weight: 600; }
+.step-pill.active { background: var(--accent); color: white; }
+
+.cars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 16px; }
+.car-card { border-radius: 10px; overflow: hidden; background: #fafafa; box-shadow: 0 3px 12px rgba(0,0,0,0.06); display: flex; flex-direction: column; }
+.car-card img { width: 100%; height: 160px; object-fit: cover; }
+.car-card .card-body { padding: 14px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.car-card h3 { margin: 0; font-size: 18px; }
+.car-card p { margin: 0; color: #555; font-size: 14px; }
+
+.big-price { font-size: 28px; font-weight: 900; color: var(--accent); }
+.option { background: #fff; padding: 12px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
+
+.summary {
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 10px;
+  background: #f7f7f7;
+  font-size: 18px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 700px){
+  .container-config { margin: 20px; padding: 12px; }
+  .car-card img { height: 140px; }
+  .summary { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+</style>
 </head>
+
 <body>
 
-  <!-- Navbar (usa la stessa della home) -->
-  <header class="navbar">
-      <img src="logo.png" alt="Primarent Logo" class="nav-logo">
-      <nav>
-          <ul>
-              <li><a href="index.html">Home</a></li>
-              <li><a href="promo.html">Offerte</a></li>
-              <li><a href="chi-siamo.html">Chi Siamo</a></li>
-              <li><a href="contatti.html">Contatti</a></li>
-              <li><a href="configuratore.html" class="cta">Configura</a></li>
-          </ul>
-      </nav>
-  </header>
+<header class="navbar">
+  <img src="logo.png" alt="Primarent Logo" class="nav-logo">
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="promo.html">Offerte</a></li>
+      <li><a href="chi-siamo.html">Chi Siamo</a></li>
+      <li><a href="contatti.html">Contatti</a></li>
+      <li><a href="configuratore.html" class="cta">Configura</a></li>
+    </ul>
+  </nav>
+</header>
 
-  <main class="container-config">
-    <!-- TITOLI E STEP -->
-    <div style="text-align:center; margin-bottom:8px;">
-      <h1 style="margin:0 0 6px 0;">Configuratore Offerta</h1>
-      <p style="margin:0;color:#666;">Scegli il modello, personalizza durata, km e servizi — il prezzo si aggiorna in tempo reale.</p>
+<main class="container-config">
+
+<!-- STEP INDICATOR -->
+<div style="text-align:center; margin-bottom:8px;">
+  <h1 style="margin:0 0 6px 0;">Configuratore Offerta</h1>
+  <p style="margin:0;color:#666;">Scegli il modello e personalizza — il prezzo si aggiorna in tempo reale.</p>
+</div>
+
+<div class="steps">
+  <div class="step-pill active" id="pill-1">1. Seleziona Auto</div>
+  <div class="step-pill" id="pill-2">2. Personalizza</div>
+  <div class="step-pill" id="pill-3">3. Riepilogo</div>
+  <div class="step-pill" id="pill-4">4. Richiesta</div>
+</div>
+
+<!-- STEP 1 -->
+<div id="step1">
+  <div class="cars-grid" id="carsGrid"></div>
+</div>
+
+<!-- STEP 2 -->
+<div id="step2" style="display:none;">
+  <h2>Personalizza il tuo contratto</h2>
+
+  <div class="options-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
+    
+    <div class="option">
+      <strong>Durata (mesi)</strong><br>
+      <select id="durata">
+        <option value="24">24</option>
+        <option value="36" selected>36</option>
+        <option value="48">48</option>
+        <option value="60">60</option>
+      </select>
     </div>
 
-    <div class="steps" aria-hidden="false">
-      <div class="step-pill active" id="pill-1">1. Seleziona Auto</div>
-      <div class="step-pill" id="pill-2">2. Personalizza</div>
-      <div class="step-pill" id="pill-3">3. Riepilogo</div>
-      <div class="step-pill" id="pill-4">4. Richiesta</div>
+    <div class="option">
+      <strong>Km annui</strong><br>
+      <select id="km">
+        <option value="10000">10.000 km</option>
+        <option value="15000">15.000 km</option>
+        <option value="20000" selected>20.000 km</option>
+        <option value="25000">25.000 km</option>
+      </select>
     </div>
 
-    <!-- STEP 1: LISTA AUTO -->
-    <div id="step1">
-      <!-- NOTE: modifica l'array 'cars' nello script per aggiungere/rimuovere modelli -->
-      <div class="cars-grid" id="carsGrid">
-        <!-- cards generate dinamicamente da JS -->
-      </div>
+    <div class="option">
+      <strong>Servizi aggiuntivi</strong><br>
+      <label><input type="checkbox" class="srv" value="10"> Manutenzione (+10€)</label><br>
+      <label><input type="checkbox" class="srv" value="20"> Assicurazione Kasko (+20€)</label><br>
+      <label><input type="checkbox" class="srv" value="15"> Pneumatici (+15€)</label><br>
+      <label><input type="checkbox" class="srv" value="8"> Vettura sostitutiva (+8€)</label>
     </div>
 
-    <!-- STEP 2: PERSONALIZZA -->
-    <div id="step2" style="display:none;">
-      <h2 style="margin-top:0;">Personalizza il tuo contratto</h2>
+    <div class="option">
+      <strong>Accessori</strong><br>
+      <label><input type="checkbox" class="access" value="5"> Portapacchi (+5€)</label><br>
+      <label><input type="checkbox" class="access" value="7"> Navigatore (+7€)</label><br>
+      <label><input type="checkbox" class="access" value="6"> Telepass (+6€)</label>
+    </div>
+  </div>
 
-      <div class="options-grid">
-        <div class="option">
-          <label><strong>Durata (mesi)</strong></label>
-          <select id="durata">
-            <option value="24">24</option>
-            <option value="36" selected>36</option>
-            <option value="48">48</option>
-            <option value="60">60</option>
-          </select>
-          <p style="font-size:13px;color:#666;margin-top:8px;">Scegli la durata che preferisci: più lunga è la durata, più basso può essere il canone.</p>
-        </div>
+  <div class="summary">
+    <div class="left">
+      <div id="selCarName" style="font-weight:700;">Seleziona un'auto</div>
+      <div id="selCarMeta" style="color:#666;font-size:14px;">Per vedere il prezzo</div>
+    </div>
+    <div class="right">
+      <div class="big-price" id="partialPrice">€0 /mese</div>
+    </div>
+  </div>
 
-        <div class="option">
-          <label><strong>Km annui</strong></label>
-          <select id="km">
-            <option value="10000">10.000 km</option>
-            <option value="15000">15.000 km</option>
-            <option value="20000" selected>20.000 km</option>
-            <option value="25000">25.000 km</option>
-          </select>
-          <p style="font-size:13px;color:#666;margin-top:8px;">Scegli il chilometraggio che ti serve: può influire sul prezzo.</p>
-        </div>
+  <div style="text-align:right;margin-top:14px;">
+    <button class="btn" onclick="backToStep1()">← Modifica auto</button>
+    <button class="btn" onclick="toStep3()" style="background:var(--accent);">Continua →</button>
+  </div>
+</div>
 
-        <div class="option">
-          <label><strong>Servizi aggiuntivi</strong></label><br>
-          <label><input type="checkbox" class="srv" value="10"> Furto 0€ (+10€/mese)</label><br>
-          <label><input type="checkbox" class="srv" value="24"> Assicurazione Kasko 0€ (+20€/mese)</label><br>
-        </div>
+<!-- STEP 3 -->
+<div id="step3" style="display:none;">
+  <h2>Riepilogo offerta</h2>
 
-        <div class="option">
-          <label><strong>Accessori</strong></label><br>
-         <label><input type="checkbox" class="srv" value="15"> Pneumatici (+15€/mese)</label><br>
-          <label><input type="checkbox" class="srv" value="8"> Vettura sostitutiva (+8€/mese)</label>
-        </div>
-      </div>
-
-      <!-- RIEPILOGO PARZIALE -->
-      <div class="summary" id="partialSummary">
-      
-        <div class="left">
-          <div id="selCarName" style="font-weight:700;">Nessuna auto selezionata</div>
-          <div id="selCarMeta" style="color:#666; font-size:14px;">Seleziona un'auto per iniziare</div>
-        </div>
-        <div class="right">
-          <div class="big-price" id="partialPrice">€0 /mese</div>
-        </div>
-      </div>
-
-      <div style="text-align:right; margin-top:14px;">
-        <button class="btn" onclick="backToStep1()" style="margin-right:10px;">← Modifica auto</button>
-        <button class="btn" onclick="toStep3()" style="background:var(--accent);">Continua →</button>
-      </div>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+    <img id="recapImg" src="" style="width:220px;height:140px;object-fit:cover;border-radius:8px;">
+    
+    <div style="flex:1;">
+      <h3 id="recapName"></h3>
+      <p id="recapMeta" style="color:#666;"></p>
+      <div id="recapServices"></div>
     </div>
 
-    <!-- STEP 3: RIEPILOGO -->
-    <div id="step3" style="display:none;">
-      <h2>Riepilogo offerta</h2>
-      <div style="display:flex; gap:16px; align-items:center; flex-wrap:wrap;">
-        <img id="recapImg" src="" alt="" style="width:220px; height:140px; object-fit:cover; border-radius:8px;">
-        <div style="flex:1;">
-          <h3 id="recapName" style="margin:0;"></h3>
-          <p id="recapMeta" style="color:#666;margin-top:6px;"></p>
-          <div style="margin-top:12px;" id="recapServices"></div>
-        </div>
-        <div style="min-width:180px;text-align:right;">
-          <div style="font-size:14px;color:#666;">Canone stimato</div>
-          <div class="big-price" id="recapPrice">€0 /mese</div>
-        </div>
-      </div>
-
-      <div style="margin-top:18px; text-align:right;">
-        <button class="btn" onclick="backToStep2()" style="margin-right:10px;">← Indietro</button>
-        <button class="btn" onclick="toStep4()" style="background:var(--accent);">Richiedi Preventivo →</button>
-      </div>
+    <div>
+      <div style="font-size:14px;color:#666;">Canone stimato</div>
+      <div class="big-price" id="recapPrice">€0 /mese</div>
     </div>
+  </div>
 
-    <!-- STEP 4: RICHIESTA -->
-    <div id="step4" style="display:none;">
-      <h2>Richiedi il preventivo</h2>
-      <p>Compila i dati qui sotto: ti risponderemo il prima possibile.</p>
+  <div style="text-align:right;margin-top:18px;">
+    <button class="btn" onclick="backToStep2()">← Indietro</button>
+    <button class="btn" onclick="toStep4()" style="background:var(--accent);">Richiedi Preventivo →</button>
+  </div>
+</div>
 
-      <div style="max-width:700px; margin:12px auto;">
-        <label>Nome</label><br>
-        <input id="userName" style="width:100%; padding:10px; margin-bottom:8px;"><br>
-        <label>Telefono</label><br>
-        <input id="userPhone" style="width:100%; padding:10px; margin-bottom:8px;"><br>
-        <label>Email</label><br>
-        <input id="userEmail" style="width:100%; padding:10px; margin-bottom:8px;"><br>
+<!-- STEP 4 -->
+<div id="step4" style="display:none;">
+  <h2>Richiedi il preventivo</h2>
 
-        <label>Note (opzionale)</label><br>
-        <textarea id="userNote" style="width:100%; padding:10px; margin-bottom:8px;"></textarea>
+  <div style="max-width:700px;margin:auto;">
+    <label>Nome</label><br>
+    <input id="userName" style="width:100%;padding:10px;margin-bottom:8px;">
 
-        <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:10px;">
-          <button class="btn" onclick="backToStep3()">← Indietro</button>
-          <button class="btn" id="sendWhatsapp" style="background:#25D366;">Invia su WhatsApp</button>
-        </div>
-      </div>
+    <label>Telefono</label><br>
+    <input id="userPhone" style="width:100%;padding:10px;margin-bottom:8px;">
+
+    <label>Email</label><br>
+    <input id="userEmail" style="width:100%;padding:10px;margin-bottom:8px;">
+
+    <label>Note (opzionale)</label><br>
+    <textarea id="userNote" style="width:100%;padding:10px;margin-bottom:8px;"></textarea>
+
+    <div style="text-align:right;">
+      <button class="btn" onclick="backToStep3()">← Indietro</button>
+      <button class="btn" id="sendWhatsapp" style="background:#25D366;">Invia su WhatsApp</button>
     </div>
+  </div>
+</div>
 
-  </main>
+</main>
+<footer style="text-align:center;padding:18px;color:#666;">
+© 2025 Primarent.it — Tutti i diritti riservati
+</footer>
 
-  <footer style="text-align:center; padding:18px; color:#666;">
-    © 2025 Primarent.it — Tutti i diritti riservati
-  </footer>
+<script>
+/* ============================================================
+   DATI AUTO
+============================================================ */
+const cars = [
+  {id:1,name:"Fiat 500 Hybrid",base:199,img:"https://images.unsplash.com/photo-1542362567-b07e54358753?w=1200",desc:"Compatta, urbana e conveniente."},
+  {id:2,name:"Jeep Renegade",base:289,img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1200",desc:"SUV compatto per ogni viaggio."},
+  {id:3,name:"Volkswagen Golf",base:329,img:"https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?w=1200",desc:"Affidabile e spaziosa."},
+  {id:4,name:"Peugeot 208",base:229,img:"https://images.unsplash.com/photo-1493238792000-8113da705763?w=1200",desc:"Elegante e moderna."}
+];
 
-  <!-- SCRIPT: contiene la lista delle auto e tutta la logica del configuratore -->
-  <script>
-  /******************************************************************
-   * CONFIGURATORE PRIMARENT - JAVASCRIPT
-   *
-   * NOTE PER LA MODIFICA:
-   * - L'array `cars` contiene tutti i modelli. Ogni elemento è un oggetto:
-   *   { id, name, base, img, desc }
-   * - Per aggiungere/modificare auto, editare direttamente l'array `cars`.
-   * - Le immagini usano URL esterni di esempio; puoi inserire percorsi locali
-   *   come 'img/auto1.jpg' se carichi le immagini nella root del repo.
-   ******************************************************************/
+let state = { carId:null, durata:36, km:20000, servizi:[], accessori:[] };
 
-  // Lista di 20 modelli di esempio. Modifica i prezzi e le immagini come preferisci.
-  const cars = [
-    {id:1, name:"Fiat 500 Hybrid Torino", base:396, img:"https://www.fiat.it/content/dam/fiat2023/cross/models/new-500-hybrid/model/500-hybrid-range/mobile.jpg", desc:"Compatta, urbana e conveniente."},
-    {id:2, name:"Jeep Renegade", base:289, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1200", desc:"SUV compatto, comodo per ogni viaggio."},
-    {id:3, name:"Volkswagen Golf", base:329, img:"https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?w=1200", desc:"Affidabile e spaziosa."},
-    {id:4, name:"Peugeot 208", base:229, img:"https://images.unsplash.com/photo-1493238792000-8113da705763?w=1200", desc:"Elegante e moderna."},
-    {id:5, name:"Renault Clio", base:219, img:"https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=1200", desc:"Piccola ma pratica."},
-    {id:6, name:"Opel Corsa", base:209, img:"https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=1200", desc:"Perfetta in città."},
-    {id:7, name:"Ford Focus", base:279, img:"https://images.unsplash.com/photo-1511910849309-2b3a6a47b2a1?w=1200", desc:"Guida confortevole e precisa."},
-    {id:8, name:"Hyundai i30", base:249, img:"https://images.unsplash.com/photo-1549924231-f129b911e442?w=1200", desc:"Design moderno e dotazioni."},
-    {id:9, name:"Kia Sportage", base:319, img:"https://images.unsplash.com/photo-1542362567-3a2e1b8aa1c2?w=1200", desc:"SUV pratico e sicuro."},
-    {id:10, name:"Toyota Corolla", base:299, img:"https://images.unsplash.com/photo-1542362567-8af5d1f2c2b1?w=1200", desc:"Affidabilità giapponese."},
-    {id:11, name:"Audi A3", base:419, img:"https://images.unsplash.com/photo-1523987355523-c7b5b6d6d6f1?w=1200", desc:"Stile e performance."},
-    {id:12, name:"BMW Serie 1", base:459, img:"https://images.unsplash.com/photo-1511919884226-9e9c0b6f9a0b?w=1200", desc:"Guida sportiva e comfort."},
-    {id:13, name:"Mercedes A-Class", base:479, img:"https://images.unsplash.com/photo-1525609004556-abc372d6cf02?w=1200", desc:"Lusso compatto."},
-    {id:14, name:"Nissan Qashqai", base:339, img:"https://images.unsplash.com/photo-1549921296-3b2f1f4c4b2b?w=1200", desc:"SUV versatile e confortevole."},
-    {id:15, name:"Seat Leon", base:259, img:"https://images.unsplash.com/photo-1503376780353-7e6692767b71?w=1200", desc:"Sportiva e pratica."},
-    {id:16, name:"Skoda Octavia", base:289, img:"https://images.unsplash.com/photo-1511919884226-1e1d2f6c7d3a?w=1200", desc:"Spazio e affidabilità."},
-    {id:17, name:"Mazda 3", base:279, img:"https://images.unsplash.com/photo-1483729558449-99ef09a8c326?w=1200", desc:"Design elegante e guida dinamica."},
-    {id:18, name:"Honda Civic", base:309, img:"https://images.unsplash.com/photo-1493238792000-8113da705764?w=1200", desc:"Qualità e durabilità."},
-    {id:19, name:"Volvo XC40", base:449, img:"https://images.unsplash.com/photo-1542362567-5b2f3a5f1b2c?w=1200", desc:"Sicurezza scandinava."},
-    {id:20, name:"Porsche Macan", base:799, img:"https://images.unsplash.com/photo-1523987355523-abc5b6d6d6f2?w=1200", desc:"Performance e prestigio."}
-  ];
+function fmt(v){ return "€"+Number(v).toLocaleString("it-IT"); }
 
-  // Stato globale del configuratore
-  let state = {
-    carId: null,
-    durata: 36,
-    km: 15000,
-    servizi: [],
-    accessori: []
-  };
-
-  // Helper: formatta prezzo
-  function fmt(eur){ return "€" + Number(eur).toLocaleString('it-IT'); }
-
-  // Inizializzazione: genera le card delle auto
-  function renderCars(){
-    const grid = document.getElementById('carsGrid');
-    grid.innerHTML = '';
-    cars.forEach(car => {
-      const card = document.createElement('div');
-      card.className = 'car-card';
-      card.innerHTML = `
-        <img src="${car.img}" alt="${car.name}">
-        <div class="card-body">
-          <h3>${car.name}</h3>
-          <p>${car.desc}</p>
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
-            <div style="font-weight:800; color:var(--accent);">${fmt(car.base)}/mese</div>
-            <button class="btn" onclick="selectCar(${car.id})">Seleziona</button>
-          </div>
+/* ============================================================
+   GENERA AUTO
+============================================================ */
+function renderCars(){
+  const grid = document.getElementById("carsGrid");
+  grid.innerHTML = "";
+  cars.forEach(car=>{
+    const div = document.createElement("div");
+    div.className="car-card";
+    div.innerHTML = `
+      <img src="${car.img}">
+      <div class="card-body">
+        <h3>${car.name}</h3>
+        <p>${car.desc}</p>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div style="font-weight:800;color:var(--accent);">${fmt(car.base)}/mese</div>
+          <button class="btn" onclick="selectCar(${car.id})">Seleziona</button>
         </div>
-      `;
-      grid.appendChild(card);
-    });
-  }
-
-  // Seleziona auto (chiamato dal bottone Seleziona)
-  function selectCar(id){
-    state.carId = id;
-    const car = cars.find(c => c.id === id);
-    document.getElementById('selCarName').innerText = car.name;
-    document.getElementById('selCarMeta').innerText = car.desc;
-    // mostra il riepilogo parziale
-    document.getElementById('partialPrice').innerText = fmt(calculatePrice());
-    // passa allo step 2
-    function updatePartialPrice(){
-  state.durata = Number(document.getElementById('durata').value);
-  state.km = Number(document.getElementById('km').value);
-  state.servizi = Array.from(document.querySelectorAll('.srv:checked')).map(n => Number(n.value));
-  state.accessori = Array.from(document.querySelectorAll('.access:checked')).map(n => Number(n.value));
-
-  document.getElementById('partialPrice').innerText = fmt(calculatePrice());
-}
-
-  // aggiorna prezzo mostrato
-  document.getElementById('partialPrice').innerText = fmt(calculatePrice());
-}
-    showStep(2);
-    updatePills(2);
-  }
-
-  // torna a step 1
-  function backToStep1(){
-    showStep(1);
-    updatePills(1);
-  }
-
-  // passo avanti: calcola prezzo parziale e mostra step3
-  function toStep3(){
-    // leggi opzioni
-    state.durata = Number(document.getElementById('durata').value);
-    state.km = Number(document.getElementById('km').value);
-    state.servizi = Array.from(document.querySelectorAll('.srv:checked')).map(n=>Number(n.value));
-    state.accessori = Array.from(document.querySelectorAll('.access:checked')).map(n=>Number(n.value));
-    // aggiorna riepilogo
-    // Aggiorna automaticamente il prezzo parziale quando cambiano i campi
-document.getElementById('durata').addEventListener('change', updatePartialPrice);
-document.getElementById('km').addEventListener('change', updatePartialPrice);
-
-document.querySelectorAll('.srv').forEach(el => {
-  el.addEventListener('change', updatePartialPrice);
-});
-
-document.querySelectorAll('.access').forEach(el => {
-  el.addEventListener('change', updatePartialPrice);
-});
-    renderRecap();
-    showStep(3);
-    updatePills(3);
-  }
-
-  function backToStep2(){
-    showStep(2);
-    updatePills(2);
-  }
-
-  function toStep4(){
-    showStep(4);
-    updatePills(4);
-    // precompila recap dati nella pagina richiesta
-    document.getElementById('userName').value = '';
-    document.getElementById('userPhone').value = '';
-    document.getElementById('userEmail').value = '';
-    document.getElementById('userNote').value = '';
-  }
-
-  // mostra step X (1..4)
-  function showStep(n){
-    for(let i=1;i<=4;i++){
-      document.getElementById('step'+i).style.display = (i===n)?'block':'none';
-      document.getElementById('pill-'+i).classList.toggle('active', i===n);
-    }
-  }
-
-  function updatePills(n){
-    for(let i=1;i<=4;i++){
-      document.getElementById('pill-'+i).classList.toggle('active', i===n);
-    }
-  }
-
-  // Calcola prezzo finale in base a parametri
-  function calculatePrice(){
-    if(!state.carId) return 0;
-    const car = cars.find(c=>c.id===state.carId);
-    let price = car.base;
-    // km multiplier
-    const kmMul = {10000:0.95,15000:1.0,20000:1.1,25000:1.2};
-    const durMul = {24:1.25,36:1.0,48:0.9,60:0.85};
-    const kmFactor = kmMul[state.km] || 1.0;
-    const durFactor = durMul[state.durata] || 1.0;
-    price = price * kmFactor * durFactor;
-    // servizi
-    const srvSum = (state.servizi || []).reduce((a,b)=>a+b,0);
-    const accSum = (state.accessori || []).reduce((a,b)=>a+b,0);
-    price = Math.round(price + srvSum + accSum);
-    return price;
-  }
-
-  // Render riepilogo nella pagina step3
-  function renderRecap(){
-    const car = cars.find(c=>c.id===state.carId);
-    document.getElementById('recapImg').src = car.img;
-    document.getElementById('recapName').innerText = car.name;
-    document.getElementById('recapMeta').innerText = car.desc + " • Durata: " + state.durata + " mesi • " + state.km + " km/annui";
-    // servizi text
-    const sv = Array.from(document.querySelectorAll('.srv:checked')).map(n=>n.parentNode.textContent.trim()).join(' • ');
-    const ac = Array.from(document.querySelectorAll('.access:checked')).map(n=>n.parentNode.textContent.trim()).join(' • ');
-    let servicesList = "";
-    if(sv) servicesList += "<strong>Servizi:</strong> "+sv+"<br>";
-    if(ac) servicesList += "<strong>Accessori:</strong> "+ac;
-    document.getElementById('recapServices').innerHTML = servicesList;
-    document.getElementById('recapPrice').innerText = fmt(calculatePrice()) + " /mese";
-  }
-
-  // Invia su WhatsApp: costruisce messaggio e apre la chat
-  document.getElementById('sendWhatsapp').addEventListener('click', function(e){
-    e.preventDefault();
-    const name = document.getElementById('userName').value || '';
-    const phone = document.getElementById('userPhone').value || '';
-    const email = document.getElementById('userEmail').value || '';
-    const note = document.getElementById('userNote').value || '';
-    const car = cars.find(c=>c.id===state.carId);
-    const message = encodeURIComponent(
-      "Richiesta preventivo Primarent%0A"+
-      "Auto: "+(car?car.name:'-')+"%0A"+
-      "Canone stimato: "+fmt(calculatePrice())+" /mese%0A"+
-      "Durata: "+state.durata+" mesi • Km/annui: "+state.km+"%0A"+
-      "Nome: "+name+"%0A"+
-      "Telefono: "+phone+"%0A"+
-      "Email: "+email+"%0A"+
-      "Note: "+note
-    );
-    // numero WhatsApp aziendale
-    const wa = "https://wa.me/393472486486?text="+message;
-    window.open(wa, '_blank');
+      </div>`;
+    grid.appendChild(div);
   });
+}
 
-  // Inizializza la pagina
-  function init(){
-    renderCars();
-    showStep(1);
+/* ============================================================
+   LOGICA CONFIGURATORE
+============================================================ */
+function selectCar(id){
+  state.carId = id;
+  const car = cars.find(c=>c.id===id);
+  document.getElementById("selCarName").innerText = car.name;
+  document.getElementById("selCarMeta").innerText = car.desc;
+  updatePartialPrice();
+  showStep(2);
+}
+
+function calculatePrice(){
+  if(!state.carId) return 0;
+
+  const car = cars.find(c=>c.id===state.carId);
+  let price = car.base;
+
+  const kmMul = {10000:0.95,15000:1.0,20000:1.1,25000:1.2};
+  const durMul = {24:1.25,36:1.0,48:0.9,60:0.85};
+
+  price = price * (kmMul[state.km]||1) * (durMul[state.durata]||1);
+
+  price += state.servizi.reduce((a,b)=>a+b,0);
+  price += state.accessori.reduce((a,b)=>a+b,0);
+
+  return Math.round(price);
+}
+
+/* ======== AGGIORNAMENTO AUTOMATICO PREZZO ======== */
+function updatePartialPrice(){
+  state.durata = Number(document.getElementById("durata").value);
+  state.km = Number(document.getElementById("km").value);
+  state.servizi = Array.from(document.querySelectorAll(".srv:checked")).map(e=>Number(e.value));
+  state.accessori = Array.from(document.querySelectorAll(".access:checked")).map(e=>Number(e.value));
+  document.getElementById("partialPrice").innerText = fmt(calculatePrice())+" /mese";
+}
+
+/* EVENT LISTENER AUTOMATICI */
+document.addEventListener("change", e=>{
+  if(e.target.id==="durata" || e.target.id==="km" || e.target.classList.contains("srv") || e.target.classList.contains("access")){
+    updatePartialPrice();
   }
+});
 
-  // Boot
-  init();
+/* ============================================================
+   NAVIGAZIONE DEGLI STEP
+============================================================ */
+function showStep(n){
+  for(let i=1;i<=4;i++){
+    document.getElementById("step"+i).style.display = (i===n?"block":"none");
+    document.getElementById("pill-"+i).classList.toggle("active",i===n);
+  }
+}
 
-  </script>
+function toStep3(){
+  renderRecap();
+  showStep(3);
+}
+function backToStep2(){ showStep(2); }
+function backToStep1(){ showStep(1); }
 
+function toStep4(){ showStep(4); }
+
+/* ============================================================
+   RIEPILOGO
+============================================================ */
+function renderRecap(){
+  const car = cars.find(c=>c.id===state.carId);
+  document.getElementById("recapImg").src = car.img;
+  document.getElementById("recapName").innerText = car.name;
+  document.getElementById("recapMeta").innerText =
+    `${car.desc} • Durata: ${state.durata} mesi • Km annui: ${state.km}`;
+  document.getElementById("recapPrice").innerText =
+    fmt(calculatePrice())+" /mese";
+
+  const srv = Array.from(document.querySelectorAll(".srv:checked"))
+    .map(n=>n.parentNode.textContent.trim())
+    .join(" • ");
+  const acc = Array.from(document.querySelectorAll(".access:checked"))
+    .map(n=>n.parentNode.textContent.trim())
+    .join(" • ");
+
+  let out="";
+  if(srv) out += "<strong>Servizi:</strong> "+srv+"<br>";
+  if(acc) out += "<strong>Accessori:</strong> "+acc;
+
+  document.getElementById("recapServices").innerHTML = out;
+}
+
+/* ============================================================
+   WHATSAPP
+============================================================ */
+document.getElementById("sendWhatsapp").addEventListener("click",function(){
+  const car = cars.find(c=>c.id===state.carId);
+
+  const msg = encodeURIComponent(
+    "Richiesta Preventivo Primarent\n"+
+    "Auto: "+car.name+"\n"+
+    "Canone stimato: "+fmt(calculatePrice())+"/mese\n"+
+    "Durata: "+state.durata+" mesi\n"+
+    "Km annui: "+state.km+"\n"+
+    "Cliente: "+document.getElementById("userName").value+"\n"+
+    "Telefono: "+document.getElementById("userPhone").value+"\n"+
+    "Email: "+document.getElementById("userEmail").value+"\n"+
+    "Note: "+document.getElementById("userNote").value
+  );
+
+  window.open("https://wa.me/393472486486?text="+msg,"_blank");
+});
+
+/* AVVIO */
+renderCars();
+showStep(1);
+
+</script>
 </body>
 </html>
