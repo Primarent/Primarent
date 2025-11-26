@@ -1,3 +1,106 @@
+/* ====== PALETTE GENERALE ====== */
+:root {
+    --primary: #0A1A2F;      /* blu navy */
+    --accent: #0091FF;       /* azzurro */
+    --light: #FFFFFF;
+    --gray: #F1F1F1;
+    --dark: #1C1C1C;
+}
+
+/* ====== SFONDO GENERALE ====== */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, var(--primary), #15385C);
+    color: var(--light);
+}
+
+/* ====== NAVBAR ====== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+}
+
+.navbar ul li a {
+    color: var(--light);
+}
+
+.cta {
+    background: var(--accent);
+    padding: 8px 15px;
+    border-radius: 8px;
+}
+
+/* ====== HERO SECTION ====== */
+.hero {
+    text-align: center;
+    padding: 150px 20px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    color: var(--light);
+}
+
+.hero p {
+    font-size: 20px;
+    color: #E0E0E0;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 14px 24px;
+    font-size: 18px;
+    background: var(--accent);
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background: #0077D4;
+}
+
+/* ====== SERVIZI ====== */
+.services {
+    padding: 60px 20px;
+    background: var(--gray);
+    color: var(--dark);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.service-box {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* ====== PROMO ====== */
+.promo {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--primary);
+    color: var(--light);
+}
+
+/* ====== FOOTER ====== */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #00000050;
+}
+
 /* FONT & RESET */
 
 body {
