@@ -185,9 +185,7 @@
 
       <!-- RIEPILOGO PARZIALE -->
       <div class="summary" id="partialSummary">
-        <button class="btn" onclick="updatePartialPrice()" style="margin-bottom:12px;">
-  Aggiorna prezzo
-</button>
+      
         <div class="left">
           <div id="selCarName" style="font-weight:700;">Nessuna auto selezionata</div>
           <div id="selCarMeta" style="color:#666; font-size:14px;">Seleziona un'auto per iniziare</div>
@@ -295,7 +293,7 @@
   let state = {
     carId: null,
     durata: 36,
-    km: 20000,
+    km: 15000,
     servizi: [],
     accessori: []
   };
@@ -335,11 +333,13 @@
     document.getElementById('partialPrice').innerText = fmt(calculatePrice());
     // passa allo step 2
     function updatePartialPrice(){
-  // aggiorna lo stato con le scelte attuali
   state.durata = Number(document.getElementById('durata').value);
   state.km = Number(document.getElementById('km').value);
   state.servizi = Array.from(document.querySelectorAll('.srv:checked')).map(n => Number(n.value));
   state.accessori = Array.from(document.querySelectorAll('.access:checked')).map(n => Number(n.value));
+
+  document.getElementById('partialPrice').innerText = fmt(calculatePrice());
+}
 
   // aggiorna prezzo mostrato
   document.getElementById('partialPrice').innerText = fmt(calculatePrice());
@@ -362,6 +362,17 @@
     state.servizi = Array.from(document.querySelectorAll('.srv:checked')).map(n=>Number(n.value));
     state.accessori = Array.from(document.querySelectorAll('.access:checked')).map(n=>Number(n.value));
     // aggiorna riepilogo
+    // Aggiorna automaticamente il prezzo parziale quando cambiano i campi
+document.getElementById('durata').addEventListener('change', updatePartialPrice);
+document.getElementById('km').addEventListener('change', updatePartialPrice);
+
+document.querySelectorAll('.srv').forEach(el => {
+  el.addEventListener('change', updatePartialPrice);
+});
+
+document.querySelectorAll('.access').forEach(el => {
+  el.addEventListener('change', updatePartialPrice);
+});
     renderRecap();
     showStep(3);
     updatePills(3);
