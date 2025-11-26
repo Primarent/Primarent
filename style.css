@@ -68,56 +68,76 @@ body {
 
 /* HERO */
 .hero {
-    background: #f7f7f7;
-    padding: 80px 40px;
     text-align: center;
+    padding: 80px 30px;
 }
 
 .hero h1 {
-    font-size: 40px;
-    margin-bottom: 15px;
+    font-size: 36px;
+    margin-bottom: 10px;
 }
 
-.hero .btn {
+.hero p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.btn {
     display: inline-block;
-    margin-top: 20px;
     background: #007bff;
     color: white;
     padding: 12px 25px;
     border-radius: 8px;
     text-decoration: none;
-}
-
-/* SEZIONI GENERALI */
-section {
-    padding: 60px 40px;
-}
-
-h2 {
-    margin-bottom: 20px;
-    font-size: 32px;
+    font-size: 16px;
 }
 
 /* SERVIZI */
+.services {
+    padding: 60px 30px;
+    text-align: center;
+}
+
 .services-grid {
     display: flex;
-    gap: 25px;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
     flex-wrap: wrap;
 }
 
 .service-box {
-    flex: 1;
-    min-width: 250px;
     background: #fafafa;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    width: 260px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+/* PROMO */
+.promo {
+    text-align: center;
+    background: #f2f7ff;
+    padding: 80px 30px;
 }
 
 /* FOOTER */
 footer {
     text-align: center;
-    padding: 20px;
-    background: #f7f7f7;
-    margin-top: 50px;
+    padding: 30px;
+    background: #fafafa;
+    margin-top: 60px;
+    font-size: 14px;
+}
+
+/* RESPONSIVE MOBILE */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .service-box {
+        width: 100%;
+    }
 }
