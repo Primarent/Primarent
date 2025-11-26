@@ -6,6 +6,18 @@ body {
     color: #222;
     line-height: 1.6;
 }
+body {
+  display: flex;
+  justify-content: center;   /* centro orizzontale */
+  align-items: center;       /* centro verticale */
+  height: 100vh;             /* altezza intera pagina */
+  margin: 0;
+}
+
+.logo {
+  width: 300px;
+  max-width: 80%;
+}
 
 /* NAVBAR */
 .navbar {
@@ -17,9 +29,12 @@ body {
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
-.logo img {
-    height: 55px; /* REGOLA LA DIMENSIONE QUI */
-    width: auto;
+.logo {
+  display: block;
+  margin: 0 auto;        /* centra orizzontalmente */
+  width: 300px;          /* ingrandisci il logo */
+  max-width: 80%;        /* per sicurezza su mobile */
+  margin-top: 50px;      /* distanzia dall’alto */
 }
 
 /* MENU */
