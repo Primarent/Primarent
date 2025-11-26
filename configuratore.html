@@ -185,6 +185,9 @@
 
       <!-- RIEPILOGO PARZIALE -->
       <div class="summary" id="partialSummary">
+        <button class="btn" onclick="updatePartialPrice()" style="margin-bottom:12px;">
+  Aggiorna prezzo
+</button>
         <div class="left">
           <div id="selCarName" style="font-weight:700;">Nessuna auto selezionata</div>
           <div id="selCarMeta" style="color:#666; font-size:14px;">Seleziona un'auto per iniziare</div>
@@ -331,6 +334,16 @@
     // mostra il riepilogo parziale
     document.getElementById('partialPrice').innerText = fmt(calculatePrice());
     // passa allo step 2
+    function updatePartialPrice(){
+  // aggiorna lo stato con le scelte attuali
+  state.durata = Number(document.getElementById('durata').value);
+  state.km = Number(document.getElementById('km').value);
+  state.servizi = Array.from(document.querySelectorAll('.srv:checked')).map(n => Number(n.value));
+  state.accessori = Array.from(document.querySelectorAll('.access:checked')).map(n => Number(n.value));
+
+  // aggiorna prezzo mostrato
+  document.getElementById('partialPrice').innerText = fmt(calculatePrice());
+}
     showStep(2);
     updatePills(2);
   }
