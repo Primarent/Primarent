@@ -1,78 +1,70 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Primarent - Noleggio a Lungo Termine</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f7f7f7;
-            color: #333;
-        }
-        header {
-            background: white;
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-        }
-        nav a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-        }
-        .hero {
-            text-align: center;
-            padding: 80px 20px;
-            background: #ffffff;
-        }
-        .promo {
-            padding: 40px 20px;
-            background: #f2f2f2;
-            text-align: center;
-        }
-        .section {
-            padding: 40px 20px;
-            max-width: 900px;
-            margin: auto;
-        }
-        footer {
-            background: #333;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            margin-top: 40px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-    <header>
-        <h1>Primarent</h1>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="logo">
+            <!-- Inserisci qui il tuo logo vettoriale (SVG) -->
+            <!-- Esempio: <img src="logo.svg" alt="Primarent Logo"> -->
+            <span class="logo-placeholder">LOGO</span>
+        </div>
         <nav>
-            <a href="index.html">Home</a>
-            <a href="promo.html">Promo del Mese</a>
-            <a href="chi-siamo.html">Chi Siamo</a>
-            <a href="configuratore.html">Configuratore</a>
-            <a href="contatti.html">Contatti</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="offerte.html">Offerte</a></li>
+                <li><a href="chi-siamo.html">Chi Siamo</a></li>
+                <li><a href="contatti.html">Contatti</a></li>
+                <li><a href="configuratore.html" class="cta">Configura</a></li>
+            </ul>
         </nav>
     </header>
 
-    <div class="hero">
-        <h2>Noleggio a Lungo Termine Chiaro e Semplice</h2>
-        <p>Primarent: scegli la tua auto, personalizza durata, km e servizi.</p>
-    </div>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Noleggio a Lungo Termine Semplice e Trasparente</h1>
+            <p>Primarent.it ti offre le migliori soluzioni di mobilità senza pensieri.</p>
+            <a href="offerte.html" class="btn">Scopri le Offerte</a>
+        </div>
+    </section>
 
-    <div class="promo">
-        <h2>🔥 Promo del mese</h2>
-        <p>Scopri le offerte aggiornate — canoni convenienti e zero pensieri.</p>
-    </div>
+    <!-- SERVIZI PRINCIPALI -->
+    <section class="services">
+        <h2>I Nostri Servizi</h2>
+        <div class="services-grid">
+            <div class="service-box">
+                <h3>Noleggio Auto</h3>
+                <p>Soluzioni flessibili per privati e aziende.</p>
+            </div>
+            <div class="service-box">
+                <h3>Assistenza Completa</h3>
+                <p>Manutenzione, assicurazione e molto altro inclusi.</p>
+            </div>
+            <div class="service-box">
+                <h3>Consulenza</h3>
+                <p>Ti guidiamo nella scelta dell'offerta perfetta.</p>
+            </div>
+        </div>
+    </section>
 
+    <!-- PROMO DEL MESE -->
+    <section class="promo">
+        <h2>Promo del Mese</h2>
+        <p>Scopri la nostra offerta più conveniente del momento.</p>
+        <a href="offerte.html" class="btn">Vai alle Offerte</a>
+    </section>
+
+    <!-- FOOTER -->
     <footer>
-        Primarent.it — Noleggio a Lungo Termine
+        <p>© 2025 Primarent.it - Noleggio a Lungo Termine</p>
     </footer>
+
 </body>
 </html>
