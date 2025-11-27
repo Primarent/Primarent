@@ -75,8 +75,23 @@ body {
     /* Spaziatura per far respirare l'immagine */
     padding: 120px 20px;
     text-align: center;
+}
 
+.hero {
+    position: relative;
+}
 
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35); /* leggero scurimento */
+    z-index: 1;
+}
+
+.hero * {
+    position: relative;
+    z-index: 2; /* porta testo e logo sopra l’overlay */
 }
 
 /* ====== SERVIZI ====== */
