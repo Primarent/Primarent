@@ -65,11 +65,12 @@ body {
     background: #0077D4;
 }
 
-.hero {
-    background-image: url('sfondo.png');
+.hero-section {
+    background-image: url("./sfondo.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
 
     /* Spaziatura per far respirare l'immagine */
     padding: 120px 20px;
