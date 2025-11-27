@@ -66,6 +66,19 @@ body {
     background: #0077D4;
 }
 
+.hero {
+    background-image: url('sfondo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    /* Spaziatura per far respirare l'immagine */
+    padding: 120px 20px;
+    text-align: center;
+
+
+}
+
 /* ====== SERVIZI ====== */
 .services {
     padding: 60px 20px;
