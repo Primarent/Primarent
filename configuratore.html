@@ -272,7 +272,7 @@ function calculatePrice(){
   let price = car.base;
 
   const kmMul = {10000:1.0,15000:1.1,20000:1.2,25000:1.27};
-  const durMul = {24:1.30,36:1.1,48:1.0,60:0.85};
+  const durMul = {24:1.30,36:1.1,48:1.0,60:0.95};
 
   price = price * (kmMul[state.km]||1) * (durMul[state.durata]||1);
 
